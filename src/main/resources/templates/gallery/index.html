@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head><title>Gallery</title></head>
+<body>
+<main layout:fragment="content">
+
+    <section class="section">
+        <div class="sec-head">
+            <h2>Gallery</h2>
+        </div>
+
+        <!-- 카테고리 필터 -->
+        <div class="filter-bar">
+            <a th:href="@{/gallery}" th:classappend="${selectedCategory == null} ? 'active'">All</a>
+            <a th:href="@{/gallery(category='illustration')}" th:classappend="${selectedCategory == 'illustration'} ? 'active'">Illustration</a>
+            <a th:href="@{/gallery(category='character')}" th:classappend="${selectedCategory == 'character'} ? 'active'">Character</a>
+            <a th:href="@{/gallery(category='digital')}" th:classappend="${selectedCategory == 'digital'} ? 'active'">Digital</a>
+        </div>
+
+        <div class="art-grid" th:if="${not #lists.isEmpty(artworks)}">
+            <a class="art-card" th:each="artwork : ${artworks}" th:href="@{/gallery/{id}(id=${artwork.id})}">
+                <div class="art-thumb">
+                    <img th:src="${artwork.imageUrl}" th:alt="${artwork.title}">
+                </div>
+                <div class="art-label">
+                    <p th:text="${artwork.title}">제목</p>
+                    <span th:text="${artwork.category}">category</span>
+                </div>
+            </a>
+        </div>
+        <p class="empty-msg" th:if="${#lists.isEmpty(artworks)}">작품을 준비 중이에요.</p>
+    </section>
+
+</main>
+</body>
+</html>

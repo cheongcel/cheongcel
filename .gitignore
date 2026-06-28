@@ -1,0 +1,18 @@
+# 빌드 결과물
+build/
+.gradle/
+
+# IntelliJ 설정
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# 환경변수 (DB 비번, API 키 등 절대 올리면 안 됨)
+.env
+application-prod.yml
+application-local.yml
+
+# OS
+.DS_Store
+Thumbs.db

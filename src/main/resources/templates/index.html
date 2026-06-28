@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>cheongcel</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-title">
+            <span class="line">cheong</span>
+            <span class="line">cel</span>
+        </div>
+    </section>
+
+    <!-- GALLERY PREVIEW -->
+    <section class="section">
+        <div class="sec-head">
+            <h2>Gallery</h2>
+            <a th:href="@{/gallery}">view all →</a>
+        </div>
+        <div class="art-grid" th:if="${not #lists.isEmpty(recentArtworks)}">
+            <div class="art-card" th:each="artwork : ${recentArtworks}">
+                <div class="art-thumb">
+                    <img th:src="${artwork.imageUrl}" th:alt="${artwork.title}" onerror="this.style.display='none'">
+                </div>
+                <div class="art-label">
+                    <p th:text="${artwork.title}">작품 제목</p>
+                    <span th:text="${artwork.category}">category</span>
+                </div>
+            </div>
+        </div>
+        <p class="empty-msg" th:if="${#lists.isEmpty(recentArtworks)}">작품을 준비 중이에요.</p>
+    </section>
+
+    <!-- SHOP PREVIEW -->
+    <section class="section">
+        <div class="sec-head">
+            <h2>Shop</h2>
+            <a th:href="@{/shop}">view all →</a>
+        </div>
+        <div class="goods-grid" th:if="${not #lists.isEmpty(featuredProducts)}">
+            <div class="goods-card" th:each="product : ${featuredProducts}">
+                <a th:href="@{/shop/{id}(id=${product.id})}">
+                    <div class="goods-img">
+                        <img th:src="${product.imageUrl}" th:alt="${product.name}" onerror="this.style.display='none'">
+                    </div>
+                    <div class="goods-info">
+                        <p th:text="${product.name}">상품명</p>
+                        <span class="goods-price" th:text="'₩' + ${#numbers.formatInteger(product.price, 1, 'COMMA')}">₩0</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <p class="empty-msg" th:if="${#lists.isEmpty(featuredProducts)}">굿즈를 준비 중이에요.</p>
+    </section>
+
+    <!-- PROJECT PREVIEW -->
+    <section class="section">
+        <div class="sec-head">
+            <h2>Project</h2>
+            <a th:href="@{/project}">view all →</a>
+        </div>
+        <div class="proj-list">
+            <a class="proj-row" href="https://divy-m1ta.onrender.com" target="_blank">
+                <div class="proj-left">
+                    <div class="proj-dot" style="background:#1a3aff"></div>
+                    <div>
+                        <div class="proj-name">DIVY</div>
+                        <div class="proj-desc">주식 배당금 포트폴리오 대시보드</div>
+                    </div>
+                </div>
+                <span class="proj-tag">→</span>
+            </a>
+            <a class="proj-row" href="https://stockpulse-dcw8.onrender.com" target="_blank">
+                <div class="proj-left">
+                    <div class="proj-dot" style="background:#ff6bab"></div>
+                    <div>
+                        <div class="proj-name">StockPulse</div>
+                        <div class="proj-desc">AI 키워드 뉴스 감성 분석 서비스</div>
+                    </div>
+                </div>
+                <span class="proj-tag">→</span>
+            </a>
+        </div>
+    </section>
+
+</main>
+</body>
+</html>

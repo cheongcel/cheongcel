@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head><title>Shop</title></head>
+<body>
+<main layout:fragment="content">
+
+    <section class="section">
+        <div class="sec-head">
+            <h2>Shop</h2>
+        </div>
+
+        <!-- 카테고리 필터 -->
+        <div class="filter-bar">
+            <a th:href="@{/shop}" th:classappend="${selectedCategory == null} ? 'active'">All</a>
+            <a th:href="@{/shop(category='tshirt')}" th:classappend="${selectedCategory == 'tshirt'} ? 'active'">T-shirt</a>
+            <a th:href="@{/shop(category='poster')}" th:classappend="${selectedCategory == 'poster'} ? 'active'">Poster</a>
+            <a th:href="@{/shop(category='bag')}" th:classappend="${selectedCategory == 'bag'} ? 'active'">Bag</a>
+            <a th:href="@{/shop(category='note')}" th:classappend="${selectedCategory == 'note'} ? 'active'">Note</a>
+        </div>
+
+        <div class="goods-grid" th:if="${not #lists.isEmpty(products)}">
+            <a class="goods-card" th:each="product : ${products}" th:href="@{/shop/{id}(id=${product.id})}">
+                <div class="goods-img">
+                    <img th:src="${product.imageUrl}" th:alt="${product.name}">
+                </div>
+                <div class="goods-info">
+                    <p th:text="${product.name}">상품명</p>
+                    <span class="goods-price" th:text="'₩' + ${#numbers.formatInteger(product.price, 1, 'COMMA')}">₩0</span>
+                </div>
+            </a>
+        </div>
+        <p class="empty-msg" th:if="${#lists.isEmpty(products)}">굿즈를 준비 중이에요.</p>
+    </section>
+
+</main>
+</body>
+</html>
