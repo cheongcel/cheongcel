@@ -1,56 +1,50 @@
 package com.cheongcel.config;
 
-import com.cheongcel.domain.Artwork;
-import com.cheongcel.domain.Product;
-import com.cheongcel.repository.ArtworkRepository;
-import com.cheongcel.repository.ProductRepository;
+import com.cheongcel.domain.Project;
+import com.cheongcel.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Component
-@Profile("local")
 @RequiredArgsConstructor
 public class DataInitializer implements ApplicationRunner {
 
-    private final ArtworkRepository artworkRepository;
-    private final ProductRepository productRepository;
+    private final ProjectRepository projectRepository;
 
     @Override
     public void run(ApplicationArguments args) {
-        if (artworkRepository.count() > 0) return;
+        if (projectRepository.count() > 0) return;
 
-        // 샘플 작품
-        artworkRepository.save(Artwork.builder()
-                .title("작품 #001").category("illustration")
-                .imageUrl("/images/placeholder.png").published(true).build());
-        artworkRepository.save(Artwork.builder()
-                .title("작품 #002").category("character")
-                .imageUrl("/images/placeholder.png").published(true).build());
-        artworkRepository.save(Artwork.builder()
-                .title("작품 #003").category("digital")
-                .imageUrl("/images/placeholder.png").published(true).build());
+        projectRepository.save(Project.builder()
+                .title("cheongcel")
+                .description("개인 브랜드 허브 사이트")
+                .techStack("Spring Boot, Thymeleaf, PostgreSQL, Docker")
+                .liveUrl("https://cheongcel.yoossi.dev")
+                .githubUrl("https://github.com/cheongcel/cheongcel")
+                .projectDate(LocalDate.of(2025, 8, 1))
+                .published(true)
+                .build());
 
-        // 샘플 굿즈
-        productRepository.save(Product.builder()
-                .name("아트 티셔츠").category("tshirt")
-                .price(new BigDecimal("29000")).stock(10)
-                .imageUrl("/images/placeholder.png").published(true).build());
-        productRepository.save(Product.builder()
-                .name("포스터 프린트").category("poster")
-                .price(new BigDecimal("15000")).stock(20)
-                .imageUrl("/images/placeholder.png").published(true).build());
-        productRepository.save(Product.builder()
-                .name("에코백").category("bag")
-                .price(new BigDecimal("19000")).stock(15)
-                .imageUrl("/images/placeholder.png").published(true).build());
-        productRepository.save(Product.builder()
-                .name("아트 노트").category("note")
-                .price(new BigDecimal("12000")).stock(30)
-                .imageUrl("/images/placeholder.png").published(true).build());
+        projectRepository.save(Project.builder()
+                .title("DIVY")
+                .description("주식 배당금 포트폴리오 대시보드")
+                .techStack("Spring Boot, PostgreSQL, Chart.js")
+                .liveUrl("https://divy-m1ta.onrender.com")
+                .projectDate(LocalDate.of(2025, 6, 1))
+                .published(true)
+                .build());
+
+        projectRepository.save(Project.builder()
+                .title("StockPulse")
+                .description("AI 키워드 뉴스 감성 분석 서비스")
+                .techStack("Spring Boot, Gemini API, Spring Scheduler")
+                .liveUrl("https://stockpulse-dcw8.onrender.com")
+                .projectDate(LocalDate.of(2025, 4, 1))
+                .published(true)
+                .build());
     }
 }

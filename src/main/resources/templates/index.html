@@ -9,6 +9,7 @@
 <main layout:fragment="content">
 
     <section class="hero">
+        <canvas id="star-canvas"></canvas>
         <div class="hero-title">
             <span class="line">cheong</span>
             <span class="line">cel</span>
@@ -17,73 +18,60 @@
 
     <section class="section">
         <div class="sec-head">
-            <h2>Gallery</h2>
-            <a th:href="@{/gallery}">view all →</a>
+            <h2>Archive</h2>
+            <a th:href="@{/archive}">view all →</a>
         </div>
-        <div class="art-grid" th:if="${not #lists.isEmpty(recentArtworks)}">
-            <div class="art-card" th:each="artwork : ${recentArtworks}">
-                <div class="art-thumb">
-                    <img th:src="${artwork.imageUrl}" th:alt="${artwork.title}" onerror="this.style.display='none'">
+        <div class="arc-list" th:if="${not #lists.isEmpty(projects)}">
+            <a class="arc-row" th:each="project : ${projects}" th:href="@{/archive/{id}(id=${project.id})}">
+                <div class="arc-left">
+                    <span class="arc-name" th:text="${project.title}">Project</span>
+                    <span class="arc-desc" th:text="${project.description} + ' · ' + ${project.techStack}">Description</span>
                 </div>
-                <div class="art-label">
-                    <p th:text="${artwork.title}">작품 제목</p>
-                    <span th:text="${artwork.category}">category</span>
+                <div class="arc-right">
+                    <span class="arc-date" th:text="${#temporals.format(project.projectDate, 'yyyy.MM')}">2025.01</span>
+                    <span class="arc-arrow">→</span>
                 </div>
-            </div>
-        </div>
-        <p class="empty-msg" th:if="${#lists.isEmpty(recentArtworks)}">작품을 준비 중이에요.</p>
-    </section>
-
-    <section class="section">
-        <div class="sec-head">
-            <h2>Shop</h2>
-            <a th:href="@{/shop}">view all →</a>
-        </div>
-        <div class="goods-grid" th:if="${not #lists.isEmpty(featuredProducts)}">
-            <div class="goods-card" th:each="product : ${featuredProducts}">
-                <a th:href="@{/shop/{id}(id=${product.id})}">
-                    <div class="goods-img">
-                        <img th:src="${product.imageUrl}" th:alt="${product.name}" onerror="this.style.display='none'">
-                    </div>
-                    <div class="goods-info">
-                        <p th:text="${product.name}">상품명</p>
-                        <span class="goods-price" th:text="'₩' + ${#numbers.formatInteger(product.price, 1, 'COMMA')}">₩0</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <p class="empty-msg" th:if="${#lists.isEmpty(featuredProducts)}">굿즈를 준비 중이에요.</p>
-    </section>
-
-    <section class="section">
-        <div class="sec-head">
-            <h2>Project</h2>
-            <a th:href="@{/project}">view all →</a>
-        </div>
-        <div class="proj-list">
-            <a class="proj-row" href="https://divy-m1ta.onrender.com" target="_blank">
-                <div class="proj-left">
-                    <div class="proj-dot" style="background:#7de4f5"></div>
-                    <div>
-                        <div class="proj-name">DIVY</div>
-                        <div class="proj-desc">주식 배당금 포트폴리오 대시보드</div>
-                    </div>
-                </div>
-                <span class="proj-tag">→</span>
-            </a>
-            <a class="proj-row" href="https://stockpulse-dcw8.onrender.com" target="_blank">
-                <div class="proj-left">
-                    <div class="proj-dot" style="background:#b8a0ff"></div>
-                    <div>
-                        <div class="proj-name">StockPulse</div>
-                        <div class="proj-desc">AI 키워드 뉴스 감성 분석 서비스</div>
-                    </div>
-                </div>
-                <span class="proj-tag">→</span>
             </a>
         </div>
+        <p class="empty-msg" th:if="${#lists.isEmpty(projects)}">아직 등록된 프로젝트가 없어요.</p>
     </section>
 
 </main>
+
+<script>
+const canvas = document.getElementById('star-canvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    const hero = canvas.parentElement;
+    function resize(){ canvas.width = hero.offsetWidth; canvas.height = hero.offsetHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const stars = Array.from({length: 90}, () => ({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*1.5+0.3,
+        speed: Math.random()*0.2+0.05,
+        twinkle: Math.random()*Math.PI*2
+    }));
+
+    function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        stars.forEach(s => {
+            s.twinkle += 0.02;
+            s.y -= s.speed;
+            if (s.y < 0) s.y = canvas.height;
+            const a = 0.3 + 0.4*Math.sin(s.twinkle);
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+            ctx.fillStyle = 'rgba(125,228,245,' + a.toFixed(2) + ')';
+            ctx.fill();
+        });
+        requestAnimationFrame(draw);
+    }
+    draw();
+}
+</script>
+
 </body>
 </html>
