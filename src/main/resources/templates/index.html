@@ -21,15 +21,15 @@
             <h2>Archive</h2>
             <a th:href="@{/archive}">view all →</a>
         </div>
-        <div class="arc-list" th:if="${not #lists.isEmpty(projects)}">
-            <a class="arc-row" th:each="project : ${projects}" th:href="@{/archive/{id}(id=${project.id})}">
-                <div class="arc-left">
-                    <span class="arc-name" th:text="${project.title}">Project</span>
-                    <span class="arc-desc" th:text="${project.description} + ' · ' + ${project.techStack}">Description</span>
-                </div>
-                <div class="arc-right">
-                    <span class="arc-date" th:text="${#temporals.format(project.projectDate, 'yyyy.MM')}">2025.01</span>
-                    <span class="arc-arrow">→</span>
+        <div class="arc-grid" th:if="${not #lists.isEmpty(projects)}">
+            <a class="arc-card" th:each="project, iter : ${projects}"
+               th:href="@{/archive/{id}(id=${project.id})}"
+               th:classappend="${'c' + (iter.index % 3 + 1)}"
+               th:style="${project.posterUrl != null} ? 'background-image:url(' + ${project.posterUrl} + ');background-size:cover;background-position:center;' : ''">
+                <span class="card-tag" th:text="${#temporals.format(project.projectDate, 'yyyy.MM')}">2025.01</span>
+                <div class="card-info">
+                    <div class="card-title" th:text="${project.title}">Project</div>
+                    <div class="card-sub" th:text="${project.description}">Description</div>
                 </div>
             </a>
         </div>
@@ -47,24 +47,22 @@ if (canvas) {
     resize();
     window.addEventListener('resize', resize);
 
-    const stars = Array.from({length: 90}, () => ({
+    const stars = Array.from({length: 180}, () => ({
         x: Math.random()*canvas.width,
         y: Math.random()*canvas.height,
-        r: Math.random()*1.5+0.3,
-        speed: Math.random()*0.2+0.05,
-        twinkle: Math.random()*Math.PI*2
+        r: Math.random()*1.4+0.2,
+        twinkle: Math.random()*Math.PI*2,
+        speed: Math.random()*0.02+0.008
     }));
 
     function draw(){
         ctx.clearRect(0,0,canvas.width,canvas.height);
         stars.forEach(s => {
-            s.twinkle += 0.02;
-            s.y -= s.speed;
-            if (s.y < 0) s.y = canvas.height;
-            const a = 0.3 + 0.4*Math.sin(s.twinkle);
+            s.twinkle += s.speed;
+            const a = 0.15 + 0.55*Math.sin(s.twinkle);
             ctx.beginPath();
             ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-            ctx.fillStyle = 'rgba(125,228,245,' + a.toFixed(2) + ')';
+            ctx.fillStyle = 'rgba(210,210,255,' + Math.max(0,a).toFixed(2) + ')';
             ctx.fill();
         });
         requestAnimationFrame(draw);

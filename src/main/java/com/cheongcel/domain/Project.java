@@ -28,7 +28,9 @@ public class Project {
 
     private String liveUrl;
     private String githubUrl;
-    private String thumbnailUrl;
+
+    // 포스터 이미지 URL (직접 제작한 카드 썸네일)
+    private String posterUrl;
 
     // Archive에 표시할 날짜 (직접 지정 가능하게)
     @Column(nullable = false)
