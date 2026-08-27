@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>cheongcel</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <section class="hero">
+        <canvas id="star-canvas"></canvas>
+        <div class="hero-title">
+            <span class="line">cheong</span>
+            <span class="line">cel</span>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="sec-head">
+            <h2>Archive</h2>
+            <a th:href="@{/archive}">view all →</a>
+        </div>
+        <div class="arc-list" th:if="${not #lists.isEmpty(projects)}">
+            <a class="arc-row" th:each="project : ${projects}" th:href="@{/archive/{id}(id=${project.id})}">
+                <div class="arc-left">
+                    <span class="arc-name" th:text="${project.title}">Project</span>
+                    <span class="arc-desc" th:text="${project.description} + ' · ' + ${project.techStack}">Description</span>
+                </div>
+                <div class="arc-right">
+                    <span class="arc-date" th:text="${#temporals.format(project.projectDate, 'yyyy.MM')}">2025.01</span>
+                    <span class="arc-arrow">→</span>
+                </div>
+            </a>
+        </div>
+        <p class="empty-msg" th:if="${#lists.isEmpty(projects)}">아직 등록된 프로젝트가 없어요.</p>
+    </section>
+
+</main>
+
+<script>
+const canvas = document.getElementById('star-canvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    const hero = canvas.parentElement;
+    function resize(){ canvas.width = hero.offsetWidth; canvas.height = hero.offsetHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const stars = Array.from({length: 90}, () => ({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*1.5+0.3,
+        speed: Math.random()*0.2+0.05,
+        twinkle: Math.random()*Math.PI*2
+    }));
+
+    function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        stars.forEach(s => {
+            s.twinkle += 0.02;
+            s.y -= s.speed;
+            if (s.y < 0) s.y = canvas.height;
+            const a = 0.3 + 0.4*Math.sin(s.twinkle);
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+            ctx.fillStyle = 'rgba(125,228,245,' + a.toFixed(2) + ')';
+            ctx.fill();
+        });
+        requestAnimationFrame(draw);
+    }
+    draw();
+}
+</script>
+
+</body>
+</html>

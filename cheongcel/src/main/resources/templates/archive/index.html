@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head><title>Archive</title></head>
+<body>
+<main layout:fragment="content">
+
+    <section class="section" style="border-top:none;">
+        <div class="sec-head">
+            <h2>Archive</h2>
+        </div>
+        <div class="arc-list" th:if="${not #lists.isEmpty(projects)}">
+            <a class="arc-row" th:each="project : ${projects}" th:href="@{/archive/{id}(id=${project.id})}">
+                <div class="arc-left">
+                    <span class="arc-name" th:text="${project.title}">Project</span>
+                    <span class="arc-desc" th:text="${project.description} + ' · ' + ${project.techStack}">Description</span>
+                </div>
+                <div class="arc-right">
+                    <span class="arc-date" th:text="${#temporals.format(project.projectDate, 'yyyy.MM')}">2025.01</span>
+                    <span class="arc-arrow">→</span>
+                </div>
+            </a>
+        </div>
+        <p class="empty-msg" th:if="${#lists.isEmpty(projects)}">아직 등록된 프로젝트가 없어요.</p>
+    </section>
+
+</main>
+</body>
+</html>
