@@ -66,7 +66,19 @@ body {
     border-bottom: 1px solid rgba(125,228,245,0.08);
     overflow: hidden;
 }
-#star-canvas { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; display: block; }
+.star-field { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.star {
+    position: absolute;
+    background: #d2d2ff;
+    border-radius: 50%;
+    animation-name: twinkle;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+@keyframes twinkle {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.85; }
+}
 .hero-title { position: relative; z-index: 1; }
 .hero-title .line {
     display: block;
@@ -88,20 +100,19 @@ body {
 /* ARCHIVE GRID (card style) */
 .arc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
     margin-top: 16px;
 }
 .arc-card {
     aspect-ratio: 1;
-    max-width: 220px;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
     text-decoration: none;
     display: flex;
     align-items: flex-end;
-    padding: 12px;
+    padding: 14px;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .arc-card:hover { transform: scale(1.03) translateY(-4px); box-shadow: 0 14px 32px rgba(125,228,245,0.15); }
