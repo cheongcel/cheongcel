@@ -15,7 +15,9 @@
 <canvas id="particle-canvas" style="display:none;"></canvas>
 
 <nav class="nav">
-    <a th:href="@{/}" class="nav-logo">cheongcel</a>
+    <a th:href="@{/}" class="nav-logo">
+    <img src="/images/logo-cc.png" alt="cheongcel" style="height:32px; width:auto; vertical-align:middle;">
+</a>
     <div class="nav-links">
         <a th:href="@{/gallery}" th:classappend="${currentUri != null and currentUri.startsWith('/gallery')} ? 'active'">Gallery</a>
         <a th:href="@{/shop}" th:classappend="${currentUri != null and currentUri.startsWith('/shop')} ? 'active'">Shop</a>
