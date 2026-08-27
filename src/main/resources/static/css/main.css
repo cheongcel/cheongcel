@@ -100,7 +100,7 @@ body {
 /* ARCHIVE GRID (card style) */
 .arc-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(5, 1fr);
     gap: 14px;
     margin-top: 16px;
 }
@@ -132,8 +132,11 @@ body {
 .card-title { font-size: 14px; font-weight: 700; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 .card-sub { font-size: 10px; font-weight: 300; color: rgba(255,255,255,0.75); margin-top: 2px; }
 
+@media (max-width: 900px) {
+    .arc-grid { grid-template-columns: repeat(3, 1fr); }
+}
 @media (max-width: 500px) {
-    .arc-card { max-width: none; }
+    .arc-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ARCHIVE DETAIL */
