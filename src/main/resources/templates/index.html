@@ -9,7 +9,6 @@
 <main layout:fragment="content">
 
     <section class="hero">
-        <div class="star-field" id="star-field"></div>
         <div class="hero-title">
             <span class="line">cheong</span>
             <span class="line">cel</span>
@@ -35,24 +34,6 @@
         </div>
         <p class="empty-msg" th:if="${#lists.isEmpty(projects)}">아직 등록된 프로젝트가 없어요.</p>
     </section>
-
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const field = document.getElementById('star-field');
-        if (!field) return;
-        const count = 120;
-        let html = '';
-        for (let i = 0; i < count; i++) {
-            const top = Math.random() * 100;
-            const left = Math.random() * 100;
-            const size = (Math.random() * 1.6 + 0.6).toFixed(1);
-            const duration = (Math.random() * 3 + 2).toFixed(1);
-            const delay = (Math.random() * 4).toFixed(1);
-            html += '<span class="star" style="top:' + top + '%;left:' + left + '%;width:' + size + 'px;height:' + size + 'px;animation-duration:' + duration + 's;animation-delay:' + delay + 's;"></span>';
-        }
-        field.innerHTML = html;
-    });
-    </script>
 
 </main>
 </body>
