@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE | cheongcel">cheongcel</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<canvas id="wave-canvas"></canvas>
+<div id="cursor"></div>
+
+<nav class="nav">
+    <a th:href="@{/}" class="nav-logo">
+        <img src="/images/logo-cc.png" alt="cheongcel" class="logo-img">
+    </a>
+    <div class="nav-links">
+        <a th:href="@{/archive}" th:classappend="${currentUri != null and currentUri.startsWith('/archive')} ? 'active'">Archive</a>
+        <a th:href="@{/about}" th:classappend="${currentUri != null and currentUri.startsWith('/about')} ? 'active'">About</a>
+        <a th:href="@{/contact}" th:classappend="${currentUri != null and currentUri.startsWith('/contact')} ? 'active'">Contact</a>
+    </div>
+</nav>
+
+<main layout:fragment="content">
+</main>
+
+<footer class="footer">
+    <span class="footer-logo">cheongcel</span>
+    <span>© 2025 cheongcel. All rights reserved.</span>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+    });
+    document.addEventListener('mousedown', () => cursor.classList.add('click'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+
+    const canvas = document.getElementById('wave-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = document.documentElement.scrollHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const cols = 26;
+    const rows = 18;
+    let t = 0;
+
+    function draw() {
+        t += 0.02;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i <= cols; i++) {
+            for (let j = 0; j <= rows; j++) {
+                const bx = (i / cols) * canvas.width;
+                const by = (j / rows) * canvas.height;
+
+                const wave1 = Math.sin(t + i * 0.35 + j * 0.2) * 26;
+                const wave2 = Math.cos(t * 0.7 + j * 0.4 - i * 0.15) * 18;
+                const dx = wave1;
+                const dy = wave2;
+
+                const depth = 0.5 + 0.5 * Math.sin(t * 0.6 + i * 0.3 + j * 0.3);
+                const size = 0.8 + depth * 2.2;
+                const alpha = 0.15 + depth * 0.55;
+
+                ctx.beginPath();
+                ctx.arc(bx + dx, by + dy, size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,255,' + alpha.toFixed(2) + ')';
+                ctx.fill();
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+    draw();
+});
+</script>
+
+</body>
+</html>
