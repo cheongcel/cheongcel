@@ -34,6 +34,7 @@ body {
 }
 #cursor.click { width: 20px; height: 20px; opacity: 0.6; }
 
+/* NAV */
 .nav {
     display: flex;
     align-items: center;
@@ -66,6 +67,7 @@ body {
 .nav-links a:hover,
 .nav-links a.active { color: #7de4f5; }
 
+/* HERO */
 .hero {
     position: relative;
     padding: 60px 36px 80px;
@@ -87,12 +89,14 @@ body {
     text-shadow: 0 0 50px rgba(125,228,245,0.25);
 }
 
+/* SECTIONS */
 .section { padding: 48px 36px; border-top: 1px solid rgba(255,255,255,0.08); }
 .sec-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
 .sec-head h2 { font-size: 12px; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
 .sec-head a { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.4); text-decoration: none; letter-spacing: 0.05em; }
 .sec-head a:hover { color: #7de4f5; }
 
+/* ARCHIVE GRID (card style) */
 .arc-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -127,6 +131,34 @@ body {
 .card-title { font-size: 14px; font-weight: 700; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 .card-sub { font-size: 10px; font-weight: 300; color: rgba(255,255,255,0.75); margin-top: 2px; }
 
+.arc-card.coin-card {
+    justify-content: center;
+    align-items: center;
+}
+.coin-spin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 55%;
+    height: 55%;
+    transform: translate(-50%, -50%);
+    transform-style: preserve-3d;
+    animation: coinSpin 4s linear infinite;
+}
+.coin-spin img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    backface-visibility: hidden;
+}
+.coin-spin .back { transform: rotateY(180deg); }
+@keyframes coinSpin {
+    from { transform: translate(-50%, -50%) rotateY(0deg); }
+    to   { transform: translate(-50%, -50%) rotateY(360deg); }
+}
+
 @media (max-width: 900px) {
     .arc-grid { grid-template-columns: repeat(3, 1fr); }
 }
@@ -134,6 +166,7 @@ body {
     .arc-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ARCHIVE DETAIL */
 .back-link { font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.4); text-decoration: none; display: inline-block; margin-bottom: 32px; }
 .back-link:hover { color: #7de4f5; }
 .detail-title { font-size: 42px; font-weight: 100; color: #7de4f5; margin-bottom: 8px; }
@@ -153,6 +186,7 @@ body {
 }
 .btn-link:hover { opacity: 0.85; }
 
+/* ABOUT */
 .about-inner { max-width: 560px; }
 .about-lead { font-size: 24px; font-weight: 300; color: #7de4f5; line-height: 1.5; margin-bottom: 20px; }
 .about-body { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 24px; }
@@ -168,6 +202,7 @@ body {
     letter-spacing: 0.04em;
 }
 
+/* CONTACT */
 .contact-list { display: flex; flex-direction: column; }
 .contact-row {
     display: flex;
@@ -183,8 +218,10 @@ body {
 }
 .contact-row:hover { padding-left: 8px; border-color: rgba(125,228,245,0.3); color: #7de4f5; }
 
+/* EMPTY */
 .empty-msg { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.3); padding: 40px 0; }
 
+/* FOOTER */
 .footer {
     padding: 24px 36px;
     display: flex;
@@ -195,6 +232,7 @@ body {
 .footer-logo { font-size: 13px; font-weight: 700; color: #7de4f5; letter-spacing: 0.08em; }
 .footer span { font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.3); }
 
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .nav { padding: 14px 20px; }
     .nav-links { gap: 16px; }

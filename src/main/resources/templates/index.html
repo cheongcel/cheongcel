@@ -21,10 +21,14 @@
             <a th:href="@{/archive}">view all →</a>
         </div>
         <div class="arc-grid" th:if="${not #lists.isEmpty(projects)}">
-            <a class="arc-card" th:each="project, iter : ${projects}"
+            <a th:each="project, iter : ${projects}"
                th:href="@{/archive/{id}(id=${project.id})}"
-               th:classappend="${'c' + (iter.index % 3 + 1)}"
-               th:style="${project.posterUrl != null} ? 'background-image:url(' + ${project.posterUrl} + ');background-size:cover;background-position:center;' : ''">
+               th:class="${project.coinImageUrl != null} ? 'arc-card coin-card' : 'arc-card ' + ('c' + (iter.index % 3 + 1))"
+               th:style="${project.coinImageUrl != null} ? 'background:' + ${project.coinBgColor ?: '#d9c7d3'} + ';' : (${project.posterUrl != null} ? 'background-image:url(' + ${project.posterUrl} + ');background-size:cover;background-position:center;' : '')">
+                <div class="coin-spin" th:if="${project.coinImageUrl != null}">
+                    <img class="front" th:src="${project.coinImageUrl}" alt="">
+                    <img class="back" th:src="${project.coinImageUrl}" alt="">
+                </div>
                 <span class="card-tag" th:text="${#temporals.format(project.projectDate, 'yyyy.MM')}">2025.01</span>
                 <div class="card-info">
                     <div class="card-title" th:text="${project.title}">Project</div>

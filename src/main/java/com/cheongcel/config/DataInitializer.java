@@ -25,6 +25,8 @@ public class DataInitializer implements ApplicationRunner {
                 .techStack("Spring Boot, Thymeleaf, PostgreSQL, Docker")
                 .liveUrl("https://cheongcel.yoossi.dev")
                 .githubUrl("https://github.com/cheongcel/cheongcel")
+                .coinImageUrl("/images/cc-coin.png")
+                .coinBgColor("#d9c7d3")
                 .projectDate(LocalDate.of(2025, 8, 1))
                 .published(true)
                 .build());

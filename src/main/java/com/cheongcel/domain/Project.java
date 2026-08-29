@@ -23,16 +23,17 @@ public class Project {
     @Column(nullable = false)
     private String description;
 
-    // "Spring Boot, PostgreSQL" 같은 콤마구분 텍스트
     private String techStack;
 
     private String liveUrl;
     private String githubUrl;
 
-    // 포스터 이미지 URL (직접 제작한 카드 썸네일)
     private String posterUrl;
 
-    // Archive에 표시할 날짜 (직접 지정 가능하게)
+    private String coinImageUrl;
+
+    private String coinBgColor;
+
     @Column(nullable = false)
     private LocalDate projectDate;
 
