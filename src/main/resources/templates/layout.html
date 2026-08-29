@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<div class="star-field" id="star-field"></div>
+<canvas id="wave-canvas"></canvas>
 <div id="cursor"></div>
 
 <nav class="nav">
@@ -43,31 +43,47 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousedown', () => cursor.classList.add('click'));
     document.addEventListener('mouseup', () => cursor.classList.remove('click'));
 
-    const field = document.getElementById('star-field');
-    const count = 320;
-    let html = '';
-    for (let i = 0; i < count; i++) {
-        const top = Math.random() * 100;
-        const left = Math.random() * 100;
-        const size = (Math.random() * 2.2 + 0.6).toFixed(1);
-        const twinkleDuration = (Math.random() * 3 + 1.5).toFixed(1);
-        const twinkleDelay = (Math.random() * 4).toFixed(1);
-        const driftDuration = (Math.random() * 8 + 6).toFixed(1);
-        const driftDelay = (Math.random() * 6).toFixed(1);
-        const dx = (Math.random() * 46 - 23).toFixed(0);
-        const dy = (Math.random() * 56 - 28).toFixed(0);
-        html += '<span class="star" style="'
-            + 'top:' + top + '%;'
-            + 'left:' + left + '%;'
-            + 'width:' + size + 'px;'
-            + 'height:' + size + 'px;'
-            + '--dx:' + dx + 'px;'
-            + '--dy:' + dy + 'px;'
-            + 'animation-duration:' + twinkleDuration + 's,' + driftDuration + 's;'
-            + 'animation-delay:' + twinkleDelay + 's,' + driftDelay + 's;'
-            + '"></span>';
+    const canvas = document.getElementById('wave-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = document.documentElement.scrollHeight;
     }
-    field.innerHTML = html;
+    resize();
+    window.addEventListener('resize', resize);
+
+    const cols = 26;
+    const rows = 18;
+    let t = 0;
+
+    function draw() {
+        t += 0.02;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = 0; i <= cols; i++) {
+            for (let j = 0; j <= rows; j++) {
+                const bx = (i / cols) * canvas.width;
+                const by = (j / rows) * canvas.height;
+
+                const wave1 = Math.sin(t + i * 0.35 + j * 0.2) * 26;
+                const wave2 = Math.cos(t * 0.7 + j * 0.4 - i * 0.15) * 18;
+                const dx = wave1;
+                const dy = wave2;
+
+                const depth = 0.5 + 0.5 * Math.sin(t * 0.6 + i * 0.3 + j * 0.3);
+                const size = 0.8 + depth * 2.2;
+                const alpha = 0.15 + depth * 0.55;
+
+                ctx.beginPath();
+                ctx.arc(bx + dx, by + dy, size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,255,' + alpha.toFixed(2) + ')';
+                ctx.fill();
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+    draw();
 });
 </script>
 
