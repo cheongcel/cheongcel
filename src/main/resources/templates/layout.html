@@ -48,31 +48,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resize() {
         canvas.width = window.innerWidth;
-        canvas.height = document.documentElement.scrollHeight;
+        canvas.height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, window.innerHeight);
     }
     resize();
     window.addEventListener('resize', resize);
+    window.addEventListener('load', resize);
 
-    const cols = 26;
-    const rows = 18;
+    if (window.ResizeObserver) {
+        const ro = new ResizeObserver(resize);
+        ro.observe(document.body);
+    } else {
+        setTimeout(resize, 300);
+        setTimeout(resize, 1000);
+    }
+
+    const isMobile = window.innerWidth < 600;
+    const cols = Math.round(canvas.width / 45);
+    const rows = Math.round(canvas.height / 45);
+    const overscan = 0.15;
     let t = 0;
 
     function draw() {
         t += 0.02;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (let i = 0; i <= cols; i++) {
-            for (let j = 0; j <= rows; j++) {
-                const bx = (i / cols) * canvas.width;
-                const by = (j / rows) * canvas.height;
+        for (let i = -2; i <= cols + 2; i++) {
+            for (let j = -2; j <= rows + 2; j++) {
+                const bx = ((i / cols) * (1 + overscan * 2) - overscan) * canvas.width;
+                const by = ((j / rows) * (1 + overscan * 2) - overscan) * canvas.height;
 
-                const wave1 = Math.sin(t + i * 0.35 + j * 0.2) * 26;
-                const wave2 = Math.cos(t * 0.7 + j * 0.4 - i * 0.15) * 18;
+                const wave1 = Math.sin(t + i * 0.35 + j * 0.2) * (isMobile ? 16 : 26);
+                const wave2 = Math.cos(t * 0.7 + j * 0.4 - i * 0.15) * (isMobile ? 11 : 18);
                 const dx = wave1;
                 const dy = wave2;
 
                 const depth = 0.5 + 0.5 * Math.sin(t * 0.6 + i * 0.3 + j * 0.3);
-                const size = 0.8 + depth * 2.2;
+                const size = 0.7 + depth * 1.6;
                 const alpha = 0.15 + depth * 0.55;
 
                 ctx.beginPath();
