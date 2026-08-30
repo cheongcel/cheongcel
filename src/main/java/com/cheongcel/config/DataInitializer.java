@@ -24,8 +24,7 @@ public class DataInitializer implements ApplicationRunner {
                     .techStack("Spring Boot, Thymeleaf, PostgreSQL, Docker")
                     .liveUrl("https://cheongcel.yoossi.dev")
                     .githubUrl("https://github.com/cheongcel/cheongcel")
-                    .coinImageUrl("/images/cc-coin.png")
-                    .coinBgColor("#d9c7d3")
+                    .posterUrl("/images/archive-cheongcel.png")
                     .projectDate(LocalDate.of(2025, 8, 1))
                     .published(true)
                     .build());
@@ -50,16 +49,15 @@ public class DataInitializer implements ApplicationRunner {
             return;
         }
 
-        // 이미 데이터가 있으면, cheongcel 프로젝트에 coin 필드만 채워넣기
+        // 이미 데이터가 있으면, cheongcel 프로젝트를 포스터 이미지 카드로 전환
         projectRepository.findAll().stream()
                 .filter(p -> "cheongcel".equals(p.getTitle()))
                 .findFirst()
                 .ifPresent(p -> {
-                    if (p.getCoinImageUrl() == null) {
-                        p.setCoinImageUrl("/images/cc-coin.png");
-                        p.setCoinBgColor("#d9c7d3");
-                        projectRepository.save(p);
-                    }
+                    p.setCoinImageUrl(null);
+                    p.setCoinBgColor(null);
+                    p.setPosterUrl("/images/archive-cheongcel.png");
+                    projectRepository.save(p);
                 });
     }
 }
