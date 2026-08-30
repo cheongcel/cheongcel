@@ -34,6 +34,7 @@ public class DataInitializer implements ApplicationRunner {
                     .description("주식 배당금 포트폴리오 대시보드")
                     .techStack("Spring Boot, PostgreSQL, Chart.js")
                     .liveUrl("https://divy-m1ta.onrender.com")
+                    .posterUrl("/images/archive-divy.png")
                     .projectDate(LocalDate.of(2025, 6, 1))
                     .published(true)
                     .build());
@@ -49,15 +50,17 @@ public class DataInitializer implements ApplicationRunner {
             return;
         }
 
-        // 이미 데이터가 있으면, cheongcel 프로젝트를 포스터 이미지 카드로 전환
-        projectRepository.findAll().stream()
-                .filter(p -> "cheongcel".equals(p.getTitle()))
-                .findFirst()
-                .ifPresent(p -> {
-                    p.setCoinImageUrl(null);
-                    p.setCoinBgColor(null);
-                    p.setPosterUrl("/images/archive-cheongcel.png");
-                    projectRepository.save(p);
-                });
+        // 이미 데이터가 있으면, cheongcel/DIVY 프로젝트를 포스터 이미지 카드로 전환
+        projectRepository.findAll().forEach(p -> {
+            if ("cheongcel".equals(p.getTitle())) {
+                p.setCoinImageUrl(null);
+                p.setCoinBgColor(null);
+                p.setPosterUrl("/images/archive-cheongcel.png");
+                projectRepository.save(p);
+            } else if ("DIVY".equals(p.getTitle())) {
+                p.setPosterUrl("/images/archive-divy.png");
+                projectRepository.save(p);
+            }
+        });
     }
 }
