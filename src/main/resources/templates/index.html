@@ -23,9 +23,10 @@
         <div class="arc-grid" th:if="${not #lists.isEmpty(projects)}">
             <a th:each="project, iter : ${projects}"
                th:href="@{/archive/{id}(id=${project.id})}"
-               th:class="${project.coinImageUrl != null} ? 'arc-card coin-card' : 'arc-card ' + ('c' + (iter.index % 3 + 1))"
-               th:style="${project.coinImageUrl != null} ? 'background:' + ${project.coinBgColor ?: '#d9c7d3'} + ';' : (${project.posterUrl != null} ? 'background-image:url(' + ${project.posterUrl} + ');background-size:cover;background-position:center;' : '')">
-                <div class="coin-spin" th:if="${project.coinImageUrl != null}">
+               th:with="isCoin=${project.coinImageUrl != null}, colorClass='c' + (${iter.index} % 3 + 1)"
+               th:class="${isCoin} ? 'arc-card coin-card' : 'arc-card ' + ${colorClass}"
+               th:style="${isCoin} ? ('background:' + (${project.coinBgColor} ?: '#d9c7d3') + ';') : (${project.posterUrl} != null ? ('background-image:url(' + ${project.posterUrl} + ');background-size:cover;background-position:center;') : '')">
+                <div class="coin-spin" th:if="${isCoin}">
                     <img class="front" th:src="${project.coinImageUrl}" alt="">
                     <img class="back" th:src="${project.coinImageUrl}" alt="">
                 </div>
