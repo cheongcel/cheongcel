@@ -25,7 +25,7 @@ public class DataInitializer implements ApplicationRunner {
                     .liveUrl("https://cheongcel.yoossi.dev")
                     .githubUrl("https://github.com/cheongcel/cheongcel")
                     .posterUrl("/images/archive-cheongcel.png")
-                    .projectDate(LocalDate.of(2025, 8, 1))
+                    .projectDate(LocalDate.of(2026, 8, 1))
                     .published(true)
                     .build());
 
@@ -35,7 +35,7 @@ public class DataInitializer implements ApplicationRunner {
                     .techStack("Spring Boot, PostgreSQL, Chart.js")
                     .liveUrl("https://divy-m1ta.onrender.com")
                     .posterUrl("/images/archive-divy.png")
-                    .projectDate(LocalDate.of(2025, 6, 1))
+                    .projectDate(LocalDate.of(2026, 1, 1))
                     .published(true)
                     .build());
 
@@ -44,7 +44,7 @@ public class DataInitializer implements ApplicationRunner {
                     .description("AI 키워드 뉴스 감성 분석 서비스")
                     .techStack("Spring Boot, Gemini API, Spring Scheduler")
                     .liveUrl("https://stockpulse-dcw8.onrender.com")
-                    .projectDate(LocalDate.of(2025, 4, 1))
+                    .projectDate(LocalDate.of(2026, 3, 1))
                     .published(true)
                     .build());
   
@@ -55,7 +55,7 @@ public class DataInitializer implements ApplicationRunner {
                     .liveUrl("https://magiconch.yoossi.dev")
                     .githubUrl("https://github.com/cheongcel/magiconch")
                     .posterUrl("/images/archive-magiconch.png")
-                    .projectDate(LocalDate.of(2026, 8, 1))
+                    .projectDate(LocalDate.of(2026, 6, 1))
                     .published(true)
                     .build());
           return;
