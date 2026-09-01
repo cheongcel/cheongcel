@@ -49,18 +49,33 @@ public class DataInitializer implements ApplicationRunner {
                     .build());
             return;
         }
+        // 이미 데이터가 있으면, 포스터/필드 최신화
+projectRepository.findAll().forEach(p -> {
+    if ("cheongcel".equals(p.getTitle())) {
+        p.setCoinImageUrl(null);
+        p.setCoinBgColor(null);
+        p.setPosterUrl("/images/archive-cheongcel.png");
+        projectRepository.save(p);
+    } else if ("DIVY".equals(p.getTitle())) {
+        p.setPosterUrl("/images/archive-divy.png");
+        projectRepository.save(p);
+    }
+});
 
-        // 이미 데이터가 있으면, cheongcel/DIVY 프로젝트를 포스터 이미지 카드로 전환
-        projectRepository.findAll().forEach(p -> {
-            if ("cheongcel".equals(p.getTitle())) {
-                p.setCoinImageUrl(null);
-                p.setCoinBgColor(null);
-                p.setPosterUrl("/images/archive-cheongcel.png");
-                projectRepository.save(p);
-            } else if ("DIVY".equals(p.getTitle())) {
-                p.setPosterUrl("/images/archive-divy.png");
-                projectRepository.save(p);
-            }
-        });
+boolean hasMagiconch = projectRepository.findAll().stream()
+        .anyMatch(p -> "소라고동".equals(p.getTitle()));
+if (!hasMagiconch) {
+    projectRepository.save(Project.builder()
+            .title("소라고동")
+            .description("심해에 숨겨진 픽셀 신탁 웹앱")
+            .techStack("Vanilla JS, PWA, Web Audio API")
+            .liveUrl("https://magiconch.yoossi.dev")
+            .githubUrl("https://github.com/cheongcel/magiconch")
+            .posterUrl("/images/archive-magiconch.png")
+            .projectDate(LocalDate.of(2026, 8, 1))
+            .published(true)
+            .build());
+}
+
     }
 }
