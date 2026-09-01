@@ -48,13 +48,13 @@ public class DataInitializer implements ApplicationRunner {
                     .published(true)
                     .build());
   
-                    projectRepository.save(Project.builder()
+            projectRepository.save(Project.builder()
                     .title("소라고동")
                     .description("심해에 숨겨진 픽셀 신탁 웹앱")
                     .techStack("Vanilla JS, PWA, Web Audio API")
                     .liveUrl("https://magiconch.yoossi.dev")
                     .githubUrl("https://github.com/cheongcel/magiconch")
-                    .posterUrl("/images/archive-magiconch.png")
+                    .posterUrl("/images/archive-magiconch.PNG")
                     .projectDate(LocalDate.of(2026, 8, 1))
                     .published(true)
                     .build());
@@ -82,7 +82,7 @@ if (!hasMagiconch) {
             .techStack("Vanilla JS, PWA, Web Audio API")
             .liveUrl("https://magiconch.yoossi.dev")
             .githubUrl("https://github.com/cheongcel/magiconch")
-            .posterUrl("/images/archive-magiconch.png")
+            .posterUrl("/images/archive-magiconch.PNG")
             .projectDate(LocalDate.of(2026, 8, 1))
             .published(true)
             .build());
