@@ -47,7 +47,18 @@ public class DataInitializer implements ApplicationRunner {
                     .projectDate(LocalDate.of(2025, 4, 1))
                     .published(true)
                     .build());
-            return;
+  
+                    projectRepository.save(Project.builder()
+                    .title("소라고동")
+                    .description("심해에 숨겨진 픽셀 신탁 웹앱")
+                    .techStack("Vanilla JS, PWA, Web Audio API")
+                    .liveUrl("https://magiconch.yoossi.dev")
+                    .githubUrl("https://github.com/cheongcel/magiconch")
+                    .posterUrl("/images/archive-magiconch.png")
+                    .projectDate(LocalDate.of(2026, 8, 1))
+                    .published(true)
+                    .build());
+          return;
         }
         // 이미 데이터가 있으면, 포스터/필드 최신화
 projectRepository.findAll().forEach(p -> {
