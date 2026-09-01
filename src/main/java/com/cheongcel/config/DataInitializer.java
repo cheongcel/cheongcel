@@ -54,7 +54,7 @@ public class DataInitializer implements ApplicationRunner {
                     .techStack("Vanilla JS, PWA, Web Audio API")
                     .liveUrl("https://magiconch.yoossi.dev")
                     .githubUrl("https://github.com/cheongcel/magiconch")
-                    .posterUrl("/images/archive-magiconch.PNG")
+                    .posterUrl("/images/archive-magiconch.png")
                     .projectDate(LocalDate.of(2026, 8, 1))
                     .published(true)
                     .build());
@@ -82,7 +82,7 @@ if (!hasMagiconch) {
             .techStack("Vanilla JS, PWA, Web Audio API")
             .liveUrl("https://magiconch.yoossi.dev")
             .githubUrl("https://github.com/cheongcel/magiconch")
-            .posterUrl("/images/archive-magiconch.PNG")
+            .posterUrl("/images/archive-magiconch.png")
             .projectDate(LocalDate.of(2026, 8, 1))
             .published(true)
             .build());
