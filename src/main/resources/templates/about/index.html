@@ -4,13 +4,55 @@
       layout:decorate="~{layout}">
 <head>
     <title>About</title>
+
+    <style>
+        .about-inner {
+            max-width: 720px;
+        }
+
+        .about-name {
+            margin: 0 0 18px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            opacity: 0.55;
+        }
+
+        .about-lead {
+            margin: 0 0 24px;
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+        }
+
+        .about-body {
+            margin: 0 0 10px;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .about-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 32px;
+        }
+    </style>
 </head>
+
 <body>
 <main layout:fragment="content">
 
-    <section class="section" style="border-top:none;">
+    <section class="section" style="border-top: none;">
         <div class="about-inner">
-            <p class="about-lead">I build software from ideas.</p>
+
+            <p class="about-name">CHEONGCEL</p>
+
+            <p class="about-lead">
+                I build software from ideas.
+            </p>
 
             <p class="about-body">
                 I’m a backend developer working with Java and Spring Boot.
@@ -27,6 +69,7 @@
                 <span class="atag">Docker</span>
                 <span class="atag">Thymeleaf</span>
             </div>
+
         </div>
     </section>
 
