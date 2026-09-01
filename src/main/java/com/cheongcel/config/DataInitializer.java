@@ -60,18 +60,27 @@ public class DataInitializer implements ApplicationRunner {
                     .build());
           return;
         }
-        // 이미 데이터가 있으면, 포스터/필드 최신화
+      // 이미 데이터가 있으면, 포스터/필드 최신화
 projectRepository.findAll().forEach(p -> {
     if ("cheongcel".equals(p.getTitle())) {
         p.setCoinImageUrl(null);
         p.setCoinBgColor(null);
         p.setPosterUrl("/images/archive-cheongcel.png");
+        p.setProjectDate(LocalDate.of(2026, 8, 1));
         projectRepository.save(p);
     } else if ("DIVY".equals(p.getTitle())) {
         p.setPosterUrl("/images/archive-divy.png");
+        p.setProjectDate(LocalDate.of(2026, 1, 1));
+        projectRepository.save(p);
+    } else if ("StockPulse".equals(p.getTitle())) {
+        p.setProjectDate(LocalDate.of(2026, 3, 1));
+        projectRepository.save(p);
+    } else if ("소라고동".equals(p.getTitle())) {
+        p.setProjectDate(LocalDate.of(2026, 6, 1));
         projectRepository.save(p);
     }
 });
+
 
 boolean hasMagiconch = projectRepository.findAll().stream()
         .anyMatch(p -> "소라고동".equals(p.getTitle()));
