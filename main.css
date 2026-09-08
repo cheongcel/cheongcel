@@ -241,3 +241,42 @@ body {
     from { transform: rotateY(0deg); }
     to   { transform: rotateY(360deg); }
 }
+
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+}
+.contact-tile {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(125,228,245,0.12);
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.contact-tile:hover {
+    transform: translateY(-3px);
+    border-color: rgba(125,228,245,0.35);
+}
+.contact-tile-wide {
+    grid-column: span 2;
+}
+.contact-icon {
+    font-size: 26px;
+    color: #7de4f5;
+}
+.contact-tile-label {
+    font-size: 14px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+.contact-tile-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 3px;
+}
