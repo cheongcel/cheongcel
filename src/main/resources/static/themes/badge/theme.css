@@ -1,0 +1,195 @@
+/* ==========================================================================
+   테마: badge  (Vol. 01 · Autumn 2026)
+   - /css/main.css 위에 덮어씌우는 스타일입니다. 색/굵기는 아래 변수만 바꾸면 돼요.
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,100..900,0..100&display=swap');
+
+html[data-theme="badge"] {
+    --bh-bg: #ffffff;              /* 배경색 (예: 오렌지 #ff5c14, 버터 #ffe14d, 라벤더 #cdbdff) */
+    --bh-accent: #ff5c14;          /* 카드 안 포인트색 (배경이 바뀌어도 유지) */
+    --bh-ink: #0a0a0a;             /* 글자색 */
+    --bh-ink-soft: rgba(10,10,10,.62);
+    --bh-line: rgba(10,10,10,.2);
+    --bh-title-weight: 560;        /* 큰 타이틀 굵기 (100~900) */
+    --bh-serif: 'Fraunces', 'Georgia', 'Times New Roman', serif;
+    --bh-card-w: 236px;
+    --bh-card-h: 350px;
+    --bh-nav-h: 71px;
+    /* 투명 홀더 색: 흰/연한 배경용(기본). 진한 배경(오렌지 등)이면 아래 4줄을 흰색 계열로 바꾸세요:
+       edge .7 / edge-soft .55 / fill-a .5 / fill-b .22 (모두 rgba(255,255,255,…)) */
+    --bh-edge: rgba(0,0,0,.3);
+    --bh-edge-soft: rgba(0,0,0,.18);
+    --bh-fill-a: rgba(0,0,0,.05);
+    --bh-fill-b: rgba(0,0,0,.015);
+    --bh-tile: rgba(10,10,10,.04);   /* 태그/연락처 타일 배경 */
+
+    background: var(--bh-bg);
+}
+html[data-theme="badge"] body { color: var(--bh-ink); background: transparent; }
+html[data-theme="badge"] ::selection { background: var(--bh-ink); color: var(--bh-bg); }
+
+/* 이 테마는 기본 마우스 커서를 사용 */
+html[data-theme="badge"] * { cursor: auto; }
+html[data-theme="badge"] a, html[data-theme="badge"] button { cursor: pointer; }
+html[data-theme="badge"] #cursor { display: none; }
+
+/* ---------- 공통 요소 (nav / section / footer …) ---------- */
+/* 내비: 화면 위에 고정(투명). 스크롤하면 배경이 살짝 깔려요 (badge-menu.js 가 .bh-scrolled 를 붙임) */
+html[data-theme="badge"] .nav { position: fixed; top: 0; left: 0; right: 0; background: transparent; backdrop-filter: none; border-bottom: 1px solid transparent; transition: background .25s, border-color .25s; }
+html[data-theme="badge"] .nav.bh-scrolled { background: color-mix(in srgb, var(--bh-bg) 82%, transparent); backdrop-filter: blur(10px); border-bottom-color: var(--bh-line); }
+html[data-theme="badge"] main { padding-top: var(--bh-nav-h); }
+html[data-theme="badge"] .nav-links { gap: 34px; }
+html[data-theme="badge"] .nav-links a { color: var(--bh-ink); font-weight: 700; font-size: 15px; letter-spacing: .01em; }
+html[data-theme="badge"] .nav-links a:hover,
+html[data-theme="badge"] .nav-links a.active { color: var(--bh-ink); text-decoration: underline; text-underline-offset: 4px; }
+
+html[data-theme="badge"] .section { border-top-color: var(--bh-line); }
+html[data-theme="badge"] .sec-head h2 { color: var(--bh-ink-soft); font-weight: 500; }
+html[data-theme="badge"] .sec-head a { color: var(--bh-ink-soft); }
+html[data-theme="badge"] .sec-head a:hover { color: var(--bh-ink); }
+
+html[data-theme="badge"] .arc-card:hover { box-shadow: 0 14px 32px rgba(10,10,10,.25); }
+html[data-theme="badge"] .arc-card.c3 { border-color: var(--bh-line); }
+
+html[data-theme="badge"] .back-link { color: var(--bh-ink-soft); }
+html[data-theme="badge"] .back-link:hover { color: var(--bh-ink); }
+html[data-theme="badge"] .detail-title { color: var(--bh-ink); font-family: var(--bh-serif); font-weight: 500; }
+html[data-theme="badge"] .detail-date { color: var(--bh-ink-soft); }
+html[data-theme="badge"] .detail-desc { color: rgba(10,10,10,.78); }
+html[data-theme="badge"] .btn-link { background: var(--bh-ink); color: var(--bh-bg); }
+
+html[data-theme="badge"] .about-lead { color: var(--bh-ink); font-family: var(--bh-serif); font-weight: 500; }
+html[data-theme="badge"] .about-body { color: rgba(10,10,10,.75); }
+html[data-theme="badge"] .atag { background: var(--bh-tile); border-color: var(--bh-line); color: var(--bh-ink); }
+
+html[data-theme="badge"] .contact-row { color: var(--bh-ink); border-bottom-color: var(--bh-line); }
+html[data-theme="badge"] .contact-row:hover { color: var(--bh-ink); border-color: var(--bh-ink); }
+html[data-theme="badge"] .contact-tile { background: var(--bh-tile); border-color: var(--bh-line); color: var(--bh-ink); }
+html[data-theme="badge"] .contact-tile:hover { border-color: var(--bh-ink); }
+html[data-theme="badge"] .contact-icon { color: var(--bh-ink); }
+html[data-theme="badge"] .contact-tile-sub { color: var(--bh-ink-soft); }
+html[data-theme="badge"] .empty-msg { color: var(--bh-ink-soft); }
+
+html[data-theme="badge"] .footer { border-top-color: var(--bh-line); }
+html[data-theme="badge"] .footer-logo { color: var(--bh-ink); }
+html[data-theme="badge"] .footer span { color: var(--bh-ink-soft); }
+
+/* ---------- 메인 히어로 ---------- */
+.bh {
+    position: relative;
+    height: 100vh; height: 100svh;
+    min-height: 580px;
+    margin-top: calc(var(--bh-nav-h) * -1);   /* 고정 내비 뒤로 끈이 올라가도록 */
+    overflow: hidden;
+    font-family: var(--bh-serif);
+    -webkit-user-select: none; user-select: none;
+}
+.bh-side { position: absolute; top: clamp(96px, 15vh, 140px); z-index: 2; font-size: clamp(14px, 1.15vw, 17px); line-height: 1.4; max-width: 26ch; font-weight: 400; }
+.bh-l { left: clamp(24px, 8vw, 130px); }
+.bh-r { right: clamp(24px, 8vw, 130px); text-align: right; }
+.bh-side a { color: var(--bh-ink-soft); text-decoration: underline; text-underline-offset: 3px; }
+.bh-side a:hover { color: var(--bh-ink); }
+
+.bh-title {
+    position: absolute; left: 50%; bottom: -2vh; transform: translateX(-50%);
+    z-index: 0; white-space: nowrap; line-height: .82; letter-spacing: -.03em;
+    font-size: 30vw; font-weight: var(--bh-title-weight);
+    font-variation-settings: "SOFT" 40;
+    user-select: none; color: var(--bh-ink);
+}
+.bh-title span { display: inline-block; }
+
+#bh-rope { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+
+.bh-badge {
+    position: absolute; left: 0; top: 0; z-index: 3;
+    width: var(--bh-card-w); height: var(--bh-card-h);
+    transform-origin: 50% 0; touch-action: none; will-change: transform;
+    cursor: grab;
+    filter: drop-shadow(16px 20px 14px rgba(0,0,0,.2));
+    visibility: hidden;   /* 물리 초기화 전 깜빡임 방지 (badge.js 가 보이게 함) */
+}
+html[data-theme="badge"] .bh-badge { cursor: grab; }
+html[data-theme="badge"] .bh-badge.bh-grab { cursor: grabbing; }
+
+.bh-holder {
+    position: absolute; inset: 0; border-radius: 14px;
+    border: 1.5px solid var(--bh-edge);
+    background: linear-gradient(135deg, var(--bh-fill-a), var(--bh-fill-b));
+    box-shadow: inset 0 0 0 4px var(--bh-fill-b);
+}
+.bh-holder::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 40px; border-bottom: 1.5px solid var(--bh-edge-soft); border-radius: 14px 14px 0 0; }
+.bh-hole { position: absolute; top: 13px; width: 16px; height: 16px; border-radius: 50%; background: var(--bh-bg); border: 1.5px solid var(--bh-edge); }
+.bh-hole.bh-a { left: 14px; } .bh-hole.bh-b { right: 14px; }
+.bh-slot { position: absolute; top: 14px; left: 50%; width: 54px; height: 14px; margin-left: -27px; border-radius: 8px; background: var(--bh-bg); border: 1.5px solid var(--bh-edge); }
+.bh-clip { position: absolute; left: 50%; top: -26px; width: 14px; height: 32px; margin-left: -7px; border: 2px solid #9aa0a8; border-radius: 7px; background: linear-gradient(#eceef1, #b2b8bf); }
+
+.bh-card {
+    position: absolute; left: 11px; right: 11px; top: 46px; bottom: 11px;
+    border-radius: 3px; background: #fafafa; overflow: hidden;
+    padding: 16px 16px 14px; display: flex; flex-direction: column;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+}
+.bh-cc { position: absolute; right: -50px; top: 70px; width: 210px; max-width: none; transform: rotate(-8deg); pointer-events: none; -webkit-user-drag: none; }
+.bh-name { position: relative; font-size: 38px; line-height: .9; letter-spacing: -.03em; font-weight: 500; color: var(--bh-ink); }
+.bh-spacer { flex: 1; }
+.bh-lab { position: relative; font-style: italic; font-size: 7.5px; margin-top: 9px; color: #333; }
+.bh-val { position: relative; font-size: 8.5px; color: #666; margin-top: 3px; word-break: break-all; }
+.bh-val a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,.25); }
+.bh-val a:hover { color: var(--bh-accent); border-color: var(--bh-accent); }
+.bh-pills { position: relative; display: flex; gap: 4px; margin-top: 5px; flex-wrap: wrap; }
+.bh-pill { font-size: 6.5px; padding: 2.5px 6px; border-radius: 99px; color: #fff; background: #111; text-decoration: none; }
+.bh-pill-b { background: var(--bh-accent); }
+.bh-pill-c { background: #6fb1e8; }
+
+.bh-hint { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 4; font-size: 11px; font-family: Georgia, serif; color: var(--bh-ink); background: var(--bh-tile); padding: 3px 11px; border-radius: 99px; transition: opacity .6s; pointer-events: none; white-space: nowrap; }
+
+@media (max-width: 768px) {
+    html[data-theme="badge"] { --bh-nav-h: 57px; }
+}
+@media (max-width: 640px) {
+    html[data-theme="badge"] { --bh-card-w: 190px; --bh-card-h: 284px; }
+    .bh-card { padding: 12px 12px 10px; top: 38px; }
+    .bh-name { font-size: 30px; }
+    .bh-cc { width: 160px; right: -38px; top: 56px; }
+    .bh-side { max-width: 16ch; }
+}
+@media (prefers-reduced-motion: reduce) { .bh-hint { transition: none; } }
+
+html[data-theme="badge"] .bh-badge * { cursor: inherit; }
+html[data-theme="badge"] .bh-badge a { cursor: pointer; }
+
+/* ---------- 호버 메뉴: 위 메뉴줄에 마우스를 대면 화면 전체가 흐려지고 전체 메뉴가 나타남 ---------- */
+html[data-theme="badge"] .nav { z-index: 120; }
+.bh-menu {
+    position: fixed; inset: 0; z-index: 110;
+    background: color-mix(in srgb, var(--bh-bg) 58%, transparent);
+    -webkit-backdrop-filter: blur(22px) saturate(1.05); backdrop-filter: blur(22px) saturate(1.05);
+    opacity: 0; visibility: hidden; transition: opacity .28s ease, visibility 0s linear .28s;
+    font-family: var(--bh-serif);
+}
+.bh-menu.open { opacity: 1; visibility: visible; transition: opacity .28s ease; }
+.bh-menu-inner { position: absolute; left: clamp(24px, 8vw, 130px); width: fit-content; max-width: calc(100% - 48px); top: calc(var(--bh-nav-h) + 7vh); }
+.bh-menu-list { display: flex; flex-direction: column; gap: .02em; }
+.bh-menu-list a {
+    font-size: clamp(46px, 9.5vw, 128px); line-height: 1.02; letter-spacing: -.03em; font-weight: var(--bh-title-weight);
+    color: var(--bh-ink); text-decoration: none; width: fit-content;
+    opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .35s ease, color .15s;
+}
+.bh-menu.open .bh-menu-list a { opacity: 1; transform: none; }
+.bh-menu.open .bh-menu-list a:nth-child(2) { transition-delay: .04s; }
+.bh-menu.open .bh-menu-list a:nth-child(3) { transition-delay: .08s; }
+.bh-menu.open .bh-menu-list a:nth-child(4) { transition-delay: .12s; }
+.bh-menu-list a:hover, .bh-menu-list a:focus-visible { color: var(--bh-accent); }
+.bh-menu-list a.active::after { content: ""; display: inline-block; width: .14em; height: .14em; margin-left: .18em; border-radius: 50%; background: var(--bh-accent); vertical-align: .55em; }
+.bh-menu-sub { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: clamp(20px, 4vh, 44px); font-size: 14px; }
+.bh-menu-sub a { color: var(--bh-ink-soft); text-decoration: underline; text-underline-offset: 3px; }
+.bh-menu-sub a:hover { color: var(--bh-ink); }
+
+/* 모바일/터치: 호버가 없으니 'Menu' 버튼으로 열기 */
+.bh-menu-btn { display: none; font: 700 15px var(--bh-serif); background: none; border: 0; color: var(--bh-ink); padding: 6px 2px; cursor: pointer !important; }
+@media (max-width: 768px), (hover: none) {
+    html[data-theme="badge"] .nav-links { display: none; }
+    .bh-menu-btn { display: block; }
+}
+@media (prefers-reduced-motion: reduce) { .bh-menu, .bh-menu-list a { transition: none; } }

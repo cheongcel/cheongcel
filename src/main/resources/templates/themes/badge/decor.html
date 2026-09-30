@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- 테마: badge · 호버 메뉴 오버레이 (layout.html 의 <body> 맨 위에 삽입됨) -->
+<th:block th:fragment="decor">
+<div class="bh-menu" id="bh-menu" aria-hidden="true">
+    <div class="bh-menu-inner" id="bh-menu-inner">
+        <nav class="bh-menu-list" aria-label="전체 메뉴">
+            <a th:href="@{/}" th:classappend="${currentUri == '/'} ? 'active'">Home</a>
+            <a th:href="@{/archive}" th:classappend="${currentUri != null and currentUri.startsWith('/archive')} ? 'active'">Archive</a>
+            <a th:href="@{/about}" th:classappend="${currentUri != null and currentUri.startsWith('/about')} ? 'active'">About</a>
+            <a th:href="@{/contact}" th:classappend="${currentUri != null and currentUri.startsWith('/contact')} ? 'active'">Contact</a>
+        </nav>
+        <div class="bh-menu-sub">
+            <a href="mailto:yooeeej@gmail.com">yooeeej@gmail.com</a>
+            <a href="https://github.com/cheongcel" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/eunjiyoo-" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+    </div>
+</div>
+</th:block>
+
+<!-- layout.html 맨 아래에 삽입되는 스크립트 -->
+<th:block th:fragment="scripts">
+<script th:src="@{/themes/badge/menu.js}" defer></script>
+</th:block>
+</body>
+</html>

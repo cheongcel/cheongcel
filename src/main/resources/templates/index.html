@@ -8,12 +8,8 @@
 <body>
 <main layout:fragment="content">
 
-    <section class="hero">
-        <div class="hero-title">
-            <span class="line">cheong</span>
-            <span class="line">cel</span>
-        </div>
-    </section>
+    <!-- 메인 히어로: 현재 테마(site.theme)의 templates/themes/<테마>/hero.html -->
+    <th:block th:replace="~{themes/__${siteTheme}__/hero :: hero}"></th:block>
 
     <section class="section">
         <div class="sec-head">

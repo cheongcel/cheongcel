@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- 테마: badge · 오렌지 배경 + 큰 세리프 타이틀 + 양쪽 끈으로 걸린 흔들리는 네임택 -->
+<section class="bh" id="bh" th:fragment="hero">
+
+    <p class="bh-side bh-l">I build small things on the internet, season by season. <a th:href="@{/about}">[more]</a></p>
+    <p class="bh-side bh-r">Currently making<br>Vol. 01 — Autumn 2026</p>
+
+    <h1 class="bh-title" id="bh-title"><span>cheongcel</span></h1>
+
+    <canvas id="bh-rope" aria-hidden="true"></canvas>
+
+    <div class="bh-badge" id="bh-badge">
+        <div class="bh-clip"></div>
+        <div class="bh-holder"><i class="bh-hole bh-a"></i><i class="bh-slot"></i><i class="bh-hole bh-b"></i></div>
+        <div class="bh-card">
+            <img class="bh-cc" th:src="@{/themes/badge/cc-badge.png}" alt="">
+            <div class="bh-name">cheong<br>cel</div>
+            <div class="bh-spacer"></div>
+            <div class="bh-lab">Contact</div>
+            <div class="bh-val"><a href="mailto:yooeeej@gmail.com">yooeeej@gmail.com</a></div>
+            <div class="bh-lab">Archive</div>
+            <div class="bh-val"><a href="https://cheongcel.yoossi.dev/" target="_blank" rel="noopener">cheongcel.yoossi.dev</a></div>
+            <div class="bh-lab">Elsewhere</div>
+            <div class="bh-pills">
+                <a class="bh-pill" href="https://github.com/cheongcel/cheongcel" target="_blank" rel="noopener">GitHub</a>
+                <span class="bh-pill bh-pill-b">Design</span>
+                <span class="bh-pill bh-pill-c">Build</span>
+            </div>
+        </div>
+    </div>
+
+    <p class="bh-hint" id="bh-hint">드래그하거나 살짝 건드려보세요</p>
+
+    <script th:src="@{/themes/badge/badge.js}" defer></script>
+</section>
+</body>
+</html>

@@ -26,6 +26,12 @@ spring:
 server:
   port: ${PORT:8081}
 
+# 시즌별 디자인 테마 (static/themes/<이름>, templates/themes/<이름>)
+# 환경변수 SITE_THEME 으로도 바꿀 수 있어요. 미리보기: 아무 주소 뒤에 ?theme=이름
+site:
+  theme: badge
+  themes: badge,purple-wave
+
 ---
 spring:
   config:
