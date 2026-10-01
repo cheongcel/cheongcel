@@ -280,3 +280,13 @@ body {
     color: rgba(255,255,255,0.4);
     margin-top: 3px;
 }
+
+
+/* ARCHIVE DETAIL — 작품 소개 / 사용 사진 (테마 공통, 글자색은 상속) */
+.detail-story, .detail-shots { margin-top: 56px; max-width: 920px; }
+.detail-sub { font-size: 12px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; margin-bottom: 16px; }
+.detail-story p { font-size: 15px; font-weight: 300; line-height: 1.9; opacity: 0.85; white-space: pre-line; max-width: 560px; }
+.shots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.shots-grid figure { margin: 0; }
+.shots-grid img { width: 100%; display: block; border-radius: 10px; background: rgba(127,127,127,0.15); }
+.shots-grid figcaption { font-size: 12px; opacity: 0.6; margin-top: 8px; }

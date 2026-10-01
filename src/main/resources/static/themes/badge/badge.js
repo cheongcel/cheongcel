@@ -16,7 +16,7 @@
     anchorX: 0.22,      // 끈이 시작되는 좌우 위치 (화면 폭 비율, 작을수록 더 바깥)
     hookY: 0.36,        // 카드가 걸리는 높이 (히어로 높이 비율)
     slack: 0.98,         // 끈 여유 (1.0 = 팽팽)
-    strapWidth: 10,
+    strapWidth: 15,
     strapColor: '#1d1f1e',
     gravity: 0.06,       // 끈 자체 무게
     cardGravity: 0.9,    // 카드가 끈을 잡아당기는 무게 (끈보다 훨씬 커야 팽팽한 V자)
@@ -24,6 +24,7 @@
     air: 0.992
   };
 
+  const HW = 30;       // 카드 위로 올라오는 금속 고리 높이 (theme.css 의 .bh-hw 와 동일)
   let W, H, dpr, cardW, cardH;
   let A = [], B = [], hook, segA = 10, segB = 10;
   let theta = 0, omega = 0;
@@ -79,6 +80,16 @@
       if (i === 0) { b.x -= dx * diff; b.y -= dy * diff; }
       else { a.x += dx * diff * .5; a.y += dy * diff * .5; b.x -= dx * diff * .5; b.y -= dy * diff * .5; }
     }
+    // 직조 끈은 너무 뾰족하게 꺾이지 않아요: 두 칸 건너 점이 너무 가까워지면 살짝 밀어냄
+    for (let i = 1; i < N - 1; i++) {
+      const a = chain[i - 1], b = chain[i + 1];
+      const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1e-4, min = seg * 1.8;
+      if (d < min) {
+        const k = (min - d) / d * .22;
+        if (i - 1 > 0) { a.x -= dx * k; a.y -= dy * k; }
+        if (i + 1 < N - 1) { b.x += dx * k; b.y += dy * k; }
+      }
+    }
   }
 
   function step() {
@@ -112,7 +123,7 @@
     for (let k = 0; k < 60; k++) { solve(A, segA, axL); solve(B, segB, axR); }
 
     // 카드 = 걸이점을 축으로 하는 진자
-    const L = cardH * .55;
+    const L = cardH * .55 + HW;
     const hax = Math.max(-4, Math.min(4, (hook.x - hook.px) - hvx0));
     let alpha = -(.55 / L) * Math.sin(theta) * 9 - (hax / L) * Math.cos(theta) * .9;
     if (drag) alpha -= theta * .05;
@@ -121,30 +132,55 @@
     if (Math.abs(theta) > 1.1) { theta = Math.sign(theta) * 1.1; omega *= -.3; }
   }
 
-  function strap(chain) {
+  // ---- 실제 라니야드(직물 끈)처럼: 그림자 · 가장자리 · 직조 결 · 박음질 ----
+  function path(P) {
     ctx.beginPath();
-    ctx.moveTo(chain[0].x, chain[0].y);
-    for (let i = 1; i < chain.length - 1; i++) {
-      const xc = (chain[i].x + chain[i + 1].x) / 2, yc = (chain[i].y + chain[i + 1].y) / 2;
-      ctx.quadraticCurveTo(chain[i].x, chain[i].y, xc, yc);
+    ctx.moveTo(P[0].x, P[0].y);
+    for (let i = 1; i < P.length - 1; i++) {
+      const xc = (P[i].x + P[i + 1].x) / 2, yc = (P[i].y + P[i + 1].y) / 2;
+      ctx.quadraticCurveTo(P[i].x, P[i].y, xc, yc);
     }
-    ctx.lineTo(hook.x, hook.y);
-    ctx.stroke();
+    ctx.lineTo(P[P.length - 1].x, P[P.length - 1].y);
+  }
+  function offset(P, d) {
+    return P.map((p, i) => {
+      const a = P[Math.max(0, i - 1)], b = P[Math.min(P.length - 1, i + 1)];
+      const dx = b.x - a.x, dy = b.y - a.y, l = Math.hypot(dx, dy) || 1;
+      return { x: p.x - dy / l * d, y: p.y + dx / l * d };
+    });
+  }
+  function strap(chain) {
+    const P = chain.map(p => ({ x: p.x, y: p.y }));
+    P[P.length - 1].y += 8;                       // 끝은 금속 크림프 속으로 들어감
+    const w = TUNE.strapWidth;
+    ctx.lineCap = 'butt'; ctx.lineJoin = 'round';
+
+    ctx.save();                                    // 1) 바닥에 드리우는 그림자
+    ctx.shadowColor = 'rgba(0,0,0,.30)'; ctx.shadowBlur = 9; ctx.shadowOffsetY = 6;
+    path(P); ctx.strokeStyle = '#14161a'; ctx.lineWidth = w; ctx.stroke();
+    ctx.restore();
+
+    path(P); ctx.strokeStyle = '#1b1e22'; ctx.lineWidth = w; ctx.stroke();            // 2) 가장자리(어두움)
+    path(P); ctx.strokeStyle = '#2a2e33'; ctx.lineWidth = w - 2.6; ctx.stroke();      //    면
+    path(P); ctx.strokeStyle = 'rgba(255,255,255,.07)'; ctx.lineWidth = w * .38; ctx.stroke(); // 중앙 은은한 광택
+
+    ctx.save();                                    // 3) 직조 결: 끈 방향에 수직인 짧은 줄무늬
+    ctx.setLineDash([1.1, 2.3]);
+    path(P); ctx.strokeStyle = 'rgba(255,255,255,.085)'; ctx.lineWidth = w - 3; ctx.stroke();
+    ctx.lineDashOffset = 1.7;
+    path(P); ctx.strokeStyle = 'rgba(0,0,0,.18)'; ctx.stroke();
+    ctx.restore();
+
+    ctx.save();                                    // 4) 양쪽 박음질
+    ctx.setLineDash([3.2, 2.6]); ctx.lineWidth = .9; ctx.strokeStyle = 'rgba(214,219,225,.55)';
+    [-1, 1].forEach(s => { path(offset(P, s * (w / 2 - 2.3))); ctx.stroke(); });
+    ctx.restore();
   }
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-    ctx.strokeStyle = TUNE.strapColor; ctx.lineWidth = TUNE.strapWidth;
     strap(A); strap(B);
-    ctx.strokeStyle = 'rgba(255,255,255,.1)'; ctx.lineWidth = 2.5;
-    strap(A); strap(B);
-    // 끈 두 줄이 만나는 금속 고리
-    ctx.beginPath(); ctx.arc(hook.x, hook.y - 2, 7, 0, Math.PI * 2);
-    ctx.fillStyle = '#c9cdd2'; ctx.fill();
-    ctx.strokeStyle = '#8b9199'; ctx.lineWidth = 2; ctx.stroke();
-
-    badge.style.transform = `translate(${hook.x - cardW / 2}px, ${hook.y + 4}px) rotate(${theta}rad)`;
+    badge.style.transform = `translate(${hook.x - cardW / 2}px, ${hook.y + HW}px) rotate(${theta}rad)`;
   }
 
   const local = e => { const r = root.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };

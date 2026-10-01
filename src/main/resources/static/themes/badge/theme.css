@@ -39,7 +39,7 @@ html[data-theme="badge"] .nav { position: fixed; top: 0; left: 0; right: 0; back
 html[data-theme="badge"] .nav.bh-scrolled { background: color-mix(in srgb, var(--bh-bg) 82%, transparent); backdrop-filter: blur(10px); border-bottom-color: var(--bh-line); }
 html[data-theme="badge"] main { padding-top: var(--bh-nav-h); }
 html[data-theme="badge"] .nav-links { gap: 34px; }
-html[data-theme="badge"] .nav-links a { color: var(--bh-ink); font-weight: 700; font-size: 15px; letter-spacing: .01em; }
+html[data-theme="badge"] .nav-links a { color: var(--bh-ink); font-family: var(--bh-serif); font-weight: 600; font-size: 17px; letter-spacing: -.005em; }
 html[data-theme="badge"] .nav-links a:hover,
 html[data-theme="badge"] .nav-links a.active { color: var(--bh-ink); text-decoration: underline; text-underline-offset: 4px; }
 
@@ -86,13 +86,12 @@ html[data-theme="badge"] .footer span { color: var(--bh-ink-soft); }
 }
 .bh-side { position: absolute; top: clamp(96px, 15vh, 140px); z-index: 2; font-size: clamp(14px, 1.15vw, 17px); line-height: 1.4; max-width: 26ch; font-weight: 400; }
 .bh-l { left: clamp(24px, 8vw, 130px); }
-.bh-r { right: clamp(24px, 8vw, 130px); text-align: right; }
 .bh-side a { color: var(--bh-ink-soft); text-decoration: underline; text-underline-offset: 3px; }
 .bh-side a:hover { color: var(--bh-ink); }
 
 .bh-title {
-    position: absolute; left: 50%; bottom: -2vh; transform: translateX(-50%);
-    z-index: 0; white-space: nowrap; line-height: .82; letter-spacing: -.03em;
+    position: absolute; left: 50%; bottom: .14em; transform: translateX(-50%);   /* g 꼬리가 잘리지 않게 */
+    z-index: 0; white-space: nowrap; line-height: 1; letter-spacing: -.03em;
     font-size: 30vw; font-weight: var(--bh-title-weight);
     font-variation-settings: "SOFT" 40;
     user-select: none; color: var(--bh-ink);
@@ -104,7 +103,7 @@ html[data-theme="badge"] .footer span { color: var(--bh-ink-soft); }
 .bh-badge {
     position: absolute; left: 0; top: 0; z-index: 3;
     width: var(--bh-card-w); height: var(--bh-card-h);
-    transform-origin: 50% 0; touch-action: none; will-change: transform;
+    transform-origin: 50% -30px; touch-action: none;   /* 회전축 = 끈이 만나는 지점 */ will-change: transform;
     cursor: grab;
     filter: drop-shadow(16px 20px 14px rgba(0,0,0,.2));
     visibility: hidden;   /* 물리 초기화 전 깜빡임 방지 (badge.js 가 보이게 함) */
@@ -122,7 +121,7 @@ html[data-theme="badge"] .bh-badge.bh-grab { cursor: grabbing; }
 .bh-hole { position: absolute; top: 13px; width: 16px; height: 16px; border-radius: 50%; background: var(--bh-bg); border: 1.5px solid var(--bh-edge); }
 .bh-hole.bh-a { left: 14px; } .bh-hole.bh-b { right: 14px; }
 .bh-slot { position: absolute; top: 14px; left: 50%; width: 54px; height: 14px; margin-left: -27px; border-radius: 8px; background: var(--bh-bg); border: 1.5px solid var(--bh-edge); }
-.bh-clip { position: absolute; left: 50%; top: -26px; width: 14px; height: 32px; margin-left: -7px; border: 2px solid #9aa0a8; border-radius: 7px; background: linear-gradient(#eceef1, #b2b8bf); }
+.bh-hw { position: absolute; left: 50%; top: -30px; width: 40px; height: 62px; margin-left: -20px; z-index: 2; filter: drop-shadow(0 2px 2px rgba(0,0,0,.28)); }   /* 금속 크림프 + 링 + 스위벨 + 후크 */
 
 .bh-card {
     position: absolute; left: 11px; right: 11px; top: 46px; bottom: 11px;
@@ -187,7 +186,7 @@ html[data-theme="badge"] .nav { z-index: 120; }
 .bh-menu-sub a:hover { color: var(--bh-ink); }
 
 /* 모바일/터치: 호버가 없으니 'Menu' 버튼으로 열기 */
-.bh-menu-btn { display: none; font: 700 15px var(--bh-serif); background: none; border: 0; color: var(--bh-ink); padding: 6px 2px; cursor: pointer !important; }
+.bh-menu-btn { display: none; font: 600 17px var(--bh-serif); background: none; border: 0; color: var(--bh-ink); padding: 6px 2px; cursor: pointer !important; }
 @media (max-width: 768px), (hover: none) {
     html[data-theme="badge"] .nav-links { display: none; }
     .bh-menu-btn { display: block; }

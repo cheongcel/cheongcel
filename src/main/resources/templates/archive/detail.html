@@ -19,7 +19,24 @@
 
         <div class="detail-links">
             <a th:if="${project.liveUrl != null}" th:href="${project.liveUrl}" target="_blank" class="btn-link">Live Site →</a>
-            <a th:if="${project.githubUrl != null}" th:href="${project.githubUrl}" target="_blank" class="btn-link">GitHub →</a>
+        </div>
+
+        <!-- 작품 소개 글 (Project.story 가 있을 때만 보임) -->
+        <div class="detail-story" th:if="${project.story != null and not #strings.isEmpty(project.story)}">
+            <h2 class="detail-sub">About this work</h2>
+            <p th:text="${project.story}">작품 소개</p>
+        </div>
+
+        <!-- 사용 사진 (Project.shots 가 있을 때만 보임. "주소|설명" 을 콤마로 이어서 저장) -->
+        <div class="detail-shots" th:if="${project.shots != null and not #strings.isEmpty(project.shots)}">
+            <h2 class="detail-sub">In use</h2>
+            <div class="shots-grid">
+                <figure th:each="shot : ${#strings.arraySplit(project.shots, ',')}"
+                        th:with="parts=${#strings.arraySplit(shot.trim(), '|')}">
+                    <img th:src="${parts[0].trim()}" th:alt="${parts.length > 1 ? parts[1].trim() : project.title}" loading="lazy">
+                    <figcaption th:if="${parts.length > 1}" th:text="${parts[1].trim()}">설명</figcaption>
+                </figure>
+            </div>
         </div>
     </section>
 
